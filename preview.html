@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overlay Preview — Softstop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: 100vw; height: 100vh; overflow: hidden; background: #000; }
+
+    /* ── Breathe animation ─────────────────────────────────────────── */
+    @keyframes tn-breathe {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(205, 214, 244, 0.07),
+          0 0 0 0px rgba(205, 214, 244, 0.0),
+          0 28px 80px rgba(0, 0, 0, 0.65);
+        transform: translateY(0px);
+      }
+      50% {
+        box-shadow:
+          0 0 0 1px rgba(205, 214, 244, 0.13),
+          0 0 0 40px rgba(205, 214, 244, 0.013),
+          0 28px 80px rgba(0, 0, 0, 0.55);
+        transform: translateY(-5px);
+      }
+    }
+
+    /* ── Overlay ───────────────────────────────────────────────────── */
+    #tab-nudge-focus-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Background gradient fallback */
+    #tab-nudge-focus-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    /* Image layer (demo uses a placeholder pattern) */
+    #tab-nudge-focus-img {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    /* Vignette */
+    #tab-nudge-focus-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center, transparent 15%, rgba(0, 0, 0, 0.62) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.28) 100%);
+      pointer-events: none;
+    }
+
+    /* Frosted glass card */
+    #tab-nudge-focus-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      padding: 58px 82px 54px;
+      background: rgba(6, 4, 16, 0.36);
+      backdrop-filter: blur(32px) saturate(1.15);
+      -webkit-backdrop-filter: blur(32px) saturate(1.15);
+      border-radius: 2px;
+      animation: tn-breathe 8s ease-in-out infinite;
+      max-width: 500px;
+    }
+
+    #tab-nudge-focus-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(205, 214, 244, 0.18) 40%, rgba(205, 214, 244, 0.18) 60%, transparent);
+    }
+
+    #tab-nudge-focus-content::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 25%;
+      right: 25%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(205, 214, 244, 0.07) 50%, transparent);
+    }
+
+    /* Heading */
+    #tab-nudge-focus-heading {
+      font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif;
+      font-size: 46px;
+      font-weight: 300;
+      color: #edf0f8;
+      letter-spacing: 0.09em;
+      line-height: 1.15;
+      text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    #tab-nudge-focus-heading::after {
+      content: '';
+      display: block;
+      width: 44px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(205, 214, 244, 0.3), transparent);
+      margin: 16px auto 0;
+    }
+
+    /* Subtext */
+    #tab-nudge-focus-sub {
+      font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif;
+      font-size: 15px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(205, 214, 244, 0.46);
+      letter-spacing: 0.2em;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Button row */
+    #tab-nudge-focus-btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      width: 100%;
+    }
+
+    /* No button — primary */
+    #tab-nudge-focus-btn-no {
+      background: transparent;
+      border: 1px solid rgba(205, 214, 244, 0.2);
+      border-radius: 1px;
+      padding: 11px 0;
+      width: 100%;
+      font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.13em;
+      color: rgba(205, 214, 244, 0.85);
+      cursor: pointer;
+      transition: border-color 0.4s ease, color 0.4s ease, background 0.4s ease;
+    }
+
+    #tab-nudge-focus-btn-no:hover {
+      background: rgba(205, 214, 244, 0.05);
+      border-color: rgba(205, 214, 244, 0.42);
+      color: rgba(205, 214, 244, 1);
+    }
+
+    /* Yes button — secondary */
+    #tab-nudge-focus-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 0;
+      font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif;
+      font-size: 13px;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      color: rgba(205, 214, 244, 0.28);
+      cursor: pointer;
+      transition: color 0.35s ease;
+    }
+
+    #tab-nudge-focus-btn:hover:not(:disabled) {
+      color: rgba(205, 214, 244, 0.6);
+    }
+
+    #tab-nudge-focus-btn:disabled {
+      opacity: 0.15;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+
+<div id="tab-nudge-focus-overlay">
+  <div id="tab-nudge-focus-bg"></div>
+  <div id="tab-nudge-focus-img"></div>
+
+  <div id="tab-nudge-focus-content">
+    <h1 id="tab-nudge-focus-heading">Take a Deep Breath</h1>
+    <p id="tab-nudge-focus-sub">Are you intending to be here?</p>
+    <div id="tab-nudge-focus-btns">
+      <button id="tab-nudge-focus-btn-no">No, show me the painting!</button>
+      <button id="tab-nudge-focus-btn">Yes, I'm here intentionally</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const btnYes = document.getElementById('tab-nudge-focus-btn');
+  const btnNo  = document.getElementById('tab-nudge-focus-btn-no');
+  const content = document.getElementById('tab-nudge-focus-content');
+
+  btnYes.addEventListener('click', function () {
+    btnYes.disabled = true;
+    btnYes.textContent = 'Ok\u2026';
+  });
+
+  btnNo.addEventListener('click', function () {
+    content.remove();
+  });
+</script>
+
+</body>
+</html>

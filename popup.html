@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="popup-root">
+    <div id="views-wrapper">
+
+      <!-- Main view -->
+      <div id="main-view">
+        <div class="header">
+          <h1>Softstop</h1>
+          <button id="btn-settings" title="Settings">⚙</button>
+        </div>
+
+        <div class="section-header">
+          <span>Distractions</span>
+        </div>
+        <div class="distraction-list-wrap">
+          <div id="distraction-list"></div>
+        </div>
+        <form id="distraction-form">
+          <input type="text" id="input-distraction" placeholder="e.g. reddit.com" required>
+          <button type="submit" id="btn-add-distraction">Add</button>
+        </form>
+
+        <div id="pause-section">
+          <div id="pause-status"></div>
+          <button id="btn-take-break">Pause Extension</button>
+          <div id="pause-options" class="hidden">
+            <button class="pause-opt" data-mins="30">30 min</button>
+            <button class="pause-opt" data-mins="60">1 hour</button>
+            <button class="pause-opt" data-rest="true">Rest of day</button>
+          </div>
+          <div id="pause-reason" class="hidden">
+            <textarea id="pause-reason-input" placeholder="Why do you need a pause?" maxlength="500"></textarea>
+            <div id="pause-reason-footer">
+              <span id="pause-char-count">0 / 30</span>
+              <button id="btn-pause-confirm" disabled>Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings view -->
+      <div id="settings-view">
+        <div class="settings-header">
+          <button id="btn-back">←</button>
+          <h2>Settings</h2>
+        </div>
+        <div class="settings-content">
+          <div class="settings-row">
+            <span class="settings-label">Time between stops</span>
+            <div class="settings-opts" id="snooze-opts">
+              <button class="settings-opt" data-mins="1">1 min</button>
+              <button class="settings-opt" data-mins="5">5 min</button>
+              <button class="settings-opt" data-mins="10">10 min</button>
+              <button class="settings-opt" data-mins="30">30 min</button>
+            </div>
+          </div>
+          <div class="settings-row">
+            <span class="settings-label">Stop on page load</span>
+            <div class="settings-opts" id="load-opts">
+              <button class="settings-opt" data-val="true">Yes</button>
+              <button class="settings-opt" data-val="false">No</button>
+            </div>
+          </div>
+          <div class="settings-row">
+            <span class="settings-label">Painting Preference</span>
+            <div class="settings-opts" id="genre-opts">
+              <button class="settings-opt" data-val="romantic">Romantic</button>
+              <button class="settings-opt" data-val="impressionist">Impressionist</button>
+            </div>
+          </div>
+          <div class="settings-row">
+            <span class="settings-label">Opening phrase</span>
+            <input type="text" id="heading-text-input" placeholder="Take a Deep Breath" maxlength="60">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

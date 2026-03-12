@@ -1,0 +1,435 @@
+/* ─── Focus Overlay — Meditative Aesthetic ─────────────────────────── */
+
+@keyframes tn-breathe {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(200, 175, 130, 0.07),
+      0 0 0 0px rgba(200, 175, 130, 0.0),
+      0 28px 80px rgba(0, 0, 0, 0.55);
+    transform: translateY(12px);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(200, 175, 130, 0.18),
+      0 0 0 40px rgba(200, 175, 130, 0.03),
+      0 28px 80px rgba(0, 0, 0, 0.45);
+    transform: translateY(-12px);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(200, 175, 130, 0.07),
+      0 0 0 0px rgba(200, 175, 130, 0.0),
+      0 28px 80px rgba(0, 0, 0, 0.55);
+    transform: translateY(0);
+  }
+}
+
+#tab-nudge-focus-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  transition: opacity 3s ease !important;
+  pointer-events: none !important;
+  font-size: 16px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+}
+
+#tab-nudge-focus-overlay.tab-nudge-focus-visible {
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+#tab-nudge-focus-bg {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-image: var(--tn-bg) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  z-index: 0 !important;
+}
+
+#tab-nudge-focus-img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-image: var(--tn-img) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  z-index: 0 !important;
+  opacity: 0 !important;
+  transition: opacity 2.5s ease !important;
+}
+
+/* Vignette — darkens edges so the card has visual breathing room */
+#tab-nudge-focus-img::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    radial-gradient(ellipse at center, transparent 15%, rgba(0, 0, 0, 0.62) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.28) 100%) !important;
+  pointer-events: none !important;
+}
+
+#tab-nudge-focus-img.tab-nudge-img-visible {
+  opacity: 1 !important;
+}
+
+#tab-nudge-focus-img::after {
+  transition: opacity 1.5s ease !important;
+}
+
+#tab-nudge-focus-img.tab-nudge-painting-mode::after {
+  opacity: 0 !important;
+}
+
+/* Frosted glass card fade-out */
+#tab-nudge-focus-content.tab-nudge-fade-out {
+  opacity: 0 !important;
+  transition: opacity 1.5s ease !important;
+}
+
+#tab-nudge-focus-btns.tab-nudge-fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.4s ease !important;
+}
+
+/* Frosted glass card */
+#tab-nudge-focus-content {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  text-align: center !important;
+  padding: 58px 82px 54px !important;
+  background: rgba(242, 232, 210, 0.18) !important;
+  backdrop-filter: blur(32px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(1.3) !important;
+  border-radius: 2px !important;
+  animation: tn-breathe 8s ease-in-out 1 forwards !important;
+  width: 680px !important;
+  max-width: 90vw !important;
+  box-sizing: border-box !important;
+}
+
+/* Hairline top border — fades to nothing at the edges */
+#tab-nudge-focus-content::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 15% !important;
+  right: 15% !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(200, 175, 130, 0.25) 40%, rgba(200, 175, 130, 0.25) 60%, transparent) !important;
+}
+
+/* Hairline bottom border — more subtle */
+#tab-nudge-focus-content::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 25% !important;
+  right: 25% !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(200, 175, 130, 0.1) 50%, transparent) !important;
+}
+
+/* Text wrapper — heading and sub stack in the same position */
+#tab-nudge-text-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* Heading */
+#tab-nudge-focus-heading {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif !important;
+  font-size: 54px !important;
+  font-weight: 300 !important;
+  color: #f0e6d2 !important;
+  letter-spacing: 0.09em !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35) !important;
+  transition: opacity 1.5s ease !important;
+}
+
+#tab-nudge-focus-heading.tab-nudge-faded {
+  opacity: 0 !important;
+}
+
+/* Thin decorative rule under heading and subtext */
+#tab-nudge-focus-sub::after {
+  content: '' !important;
+  display: block !important;
+  width: 44px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(200, 175, 130, 0.45), transparent) !important;
+  margin: 16px auto 0 !important;
+}
+
+#tab-nudge-focus-heading::after {
+  content: '' !important;
+  display: block !important;
+  width: 44px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(200, 175, 130, 0.45), transparent) !important;
+  margin: 16px auto 0 !important;
+}
+
+/* Subtext and buttons — hidden until heading fades */
+#tab-nudge-focus-sub,
+#tab-nudge-focus-btns {
+  opacity: 0 !important;
+  transition: opacity 1.5s ease !important;
+}
+
+#tab-nudge-focus-sub.tab-nudge-reveal,
+#tab-nudge-focus-btns.tab-nudge-reveal {
+  opacity: 1 !important;
+}
+
+/* Subtext — absolutely placed over the heading */
+#tab-nudge-focus-sub {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif !important;
+  font-size: 50px !important;
+  font-weight: 300 !important;
+  color: #f0e6d2 !important;
+  letter-spacing: 0.09em !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Button row */
+#tab-nudge-focus-btns {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 44px !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* Primary — "No, show me the painting!" */
+#tab-nudge-focus-btn-no {
+  background: transparent !important;
+  border: none !important;
+  padding: 11px 0 !important;
+  width: 100% !important;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.13em !important;
+  color: rgba(240, 230, 210, 0.85) !important;
+  cursor: pointer !important;
+  transition: color 0.4s ease !important;
+}
+
+#tab-nudge-focus-btn-no:hover {
+  color: rgba(240, 230, 210, 1) !important;
+}
+
+/* Snooze message */
+#tab-nudge-snooze-msg {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  color: rgba(240, 230, 210, 0.55) !important;
+  letter-spacing: 0.08em !important;
+  text-align: center !important;
+  opacity: 0 !important;
+  transition: opacity 1s ease !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#tab-nudge-snooze-msg.tab-nudge-reveal {
+  opacity: 1 !important;
+}
+
+/* Secondary — "Yes, I'm here intentionally" */
+#tab-nudge-focus-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 6px 0 !important;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Palatino Linotype', Palatino, Georgia, serif !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  letter-spacing: 0.1em !important;
+  color: rgba(240, 230, 210, 0.3) !important;
+  cursor: pointer !important;
+  transition: color 0.35s ease !important;
+}
+
+#tab-nudge-focus-btn:hover:not(:disabled) {
+  color: rgba(240, 230, 210, 0.65) !important;
+  background: transparent !important;
+}
+
+#tab-nudge-focus-btn:disabled {
+  opacity: 0.15 !important;
+  cursor: default !important;
+}
+
+/* Painting caption */
+#tab-nudge-caption {
+  position: absolute !important;
+  bottom: 32px !important;
+  right: 40px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 5px !important;
+  opacity: 0 !important;
+  transition: opacity 2s ease !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+#tab-nudge-caption.tab-nudge-caption-visible {
+  opacity: 1 !important;
+}
+
+#tab-nudge-caption-title,
+#tab-nudge-caption-meta {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-style: normal !important;
+  color: rgba(240, 230, 210, 0.6) !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4) !important;
+  text-align: right !important;
+}
+
+#tab-nudge-caption-title {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+#tab-nudge-caption-meta {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Nudge banner */
+#tab-nudge-banner {
+  position: fixed !important;
+  bottom: -80px;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 20px !important;
+  background: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  border-radius: 14px 14px 0 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.25) !important;
+  transition: bottom 0.3s ease !important;
+  white-space: nowrap !important;
+}
+
+#tab-nudge-banner.tab-nudge-visible {
+  bottom: 0 !important;
+}
+
+#tab-nudge-msg {
+  flex-shrink: 0 !important;
+  font-weight: 500 !important;
+}
+
+#tab-nudge-actions {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.tab-nudge-btn {
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: opacity 0.15s ease !important;
+}
+
+.tab-nudge-btn:hover {
+  opacity: 0.85 !important;
+}
+
+.tab-nudge-done {
+  background: #a6e3a1 !important;
+  color: #1e1e2e !important;
+}
+
+.tab-nudge-next {
+  background: #89b4fa !important;
+  color: #1e1e2e !important;
+}
+
+#tab-nudge-dismiss {
+  background: none !important;
+  border: none !important;
+  color: #6c7086 !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  padding: 0 0 0 4px !important;
+  line-height: 1 !important;
+  transition: color 0.15s ease !important;
+}
+
+#tab-nudge-dismiss:hover {
+  color: #cdd6f4 !important;
+}
+
+.tab-nudge-undo {
+  background: #f9e2af !important;
+  color: #1e1e2e !important;
+}
+
+#tab-nudge-bar {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  height: 3px !important;
+  width: 100% !important;
+  background: #a6e3a1 !important;
+  border-radius: 0 0 0 14px !important;
+  transform-origin: left !important;
+  transition: none !important;
+}
+
+#tab-nudge-bar.tab-nudge-bar-shrink {
+  width: 0% !important;
+  transition: width 4s linear !important;
+}
